@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agustin | Finanzas y Jornada</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Panel personal de Agustin</p>
+        <h1>Agustin Control</h1>
+        <p class="top-subtitle" id="daily-greeting">Tu centro para ordenar plata, trabajo y estudio.</p>
+      </div>
+      <div class="top-actions">
+        <button class="icon-button" id="export-json" title="Exportar backup JSON" aria-label="Exportar backup JSON">⬇</button>
+        <label class="icon-button import-button" title="Importar backup JSON" aria-label="Importar backup JSON">
+          ⬆
+          <input id="import-json" type="file" accept="application/json">
+        </label>
+        <button class="ghost-button" id="reset-demo">Cargar ejemplo</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar" aria-label="Navegacion">
+        <div class="profile-card">
+          <div class="avatar" aria-hidden="true">A</div>
+          <div>
+            <strong>Agustin</strong>
+            <span>Modo enfoque</span>
+          </div>
+        </div>
+        <button class="nav-item active" data-view="home">Inicio</button>
+        <button class="nav-item" data-view="work">Trabajo</button>
+        <button class="nav-item" data-view="study">Estudio</button>
+        <button class="nav-item" data-view="dglab">Proyecto DGLAB</button>
+        <button class="nav-item" data-view="finances">Ingresos y gastos</button>
+        <button class="nav-item" data-view="gym">Gimnasio</button>
+        <button class="nav-item" data-view="investments">Ahorros e inversiones</button>
+        <button class="nav-item" data-view="records">Historial</button>
+      </aside>
+
+      <section class="content">
+        <section class="view active" id="home">
+          <div class="home-hero">
+            <p class="eyebrow">Inicio de rutina</p>
+            <h2 id="home-title">Hola, Agustin</h2>
+            <p class="motivation" id="motivation-message">100% foco. Pensamiento positivo. Perseverancia.</p>
+            <div class="home-pulse">
+              <span id="home-date"></span>
+              <span id="home-streak">Tu constancia se construye hoy.</span>
+            </div>
+          </div>
+
+          <div class="action-grid" aria-label="Entrar a una seccion">
+            <button class="action-card work-card" data-view="work">
+              <span>Trabajo</span>
+              <strong>Cerrar jornada y horas</strong>
+            </button>
+            <button class="action-card study-card" data-view="study">
+              <span>Estudio</span>
+              <strong>Ordenar bloques y avances</strong>
+            </button>
+            <button class="action-card dglab-card" data-view="dglab">
+              <span>Proyecto Personal</span>
+              <strong>DGLAB</strong>
+            </button>
+            <button class="action-card finance-card" data-view="finances">
+              <span>Ingresos y gastos</span>
+              <strong>Registrar plata</strong>
+            </button>
+            <button class="action-card gym-card" data-view="gym">
+              <span>Gimnasio</span>
+              <strong>Marcar si fui</strong>
+            </button>
+            <button class="action-card savings-card" data-view="investments">
+              <span>Ahorros</span>
+              <strong>Ver objetivos</strong>
+            </button>
+          </div>
+
+          <div class="home-summary">
+            <article class="mini-panel">
+              <span>Hoy</span>
+              <strong id="today-summary">Sin registros todavia</strong>
+            </article>
+            <article class="mini-panel">
+              <span>Foco siguiente</span>
+              <strong id="next-focus-summary">Elegir una accion simple</strong>
+            </article>
+            <article class="mini-panel month-close">
+              <span>Cierre mensual</span>
+              <div class="close-controls">
+                <input type="month" id="close-month" aria-label="Mes para exportar">
+                <button class="primary-button" id="export-monthly-excel" type="button">Exportar Excel</button>
+              </div>
+            </article>
+            <article class="mini-panel reminders-panel">
+              <span>Recordatorios</span>
+              <div class="reminder-controls">
+                <select id="reminder-frequency" aria-label="Frecuencia de recordatorios">
+                  <option value="60">Cada 1 hora</option>
+                  <option value="120">Cada 2 horas</option>
+                  <option value="180">Cada 3 horas</option>
+                  <option value="240">Cada 4 horas</option>
+                </select>
+                <button class="primary-button" id="toggle-reminders" type="button">Activar</button>
+                <button class="ghost-button" id="test-reminder" type="button">Probar</button>
+              </div>
+              <small id="reminder-status">Desactivados</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="dashboard">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Este mes</p>
+              <h2>Tablero de Agustin</h2>
+            </div>
+            <input type="month" id="month-filter">
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric income">
+              <span>Ingresos</span>
+              <strong id="metric-income">$0</strong>
+            </article>
+            <article class="metric expense">
+              <span>Gastos</span>
+              <strong id="metric-expense">$0</strong>
+            </article>
+            <article class="metric balance">
+              <span>Balance</span>
+              <strong id="metric-balance">$0</strong>
+            </article>
+            <article class="metric work">
+              <span>Horas normales / extras</span>
+              <strong id="metric-hours">0 h / 0 h</strong>
+            </article>
+          </div>
+
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-title">
+                <h3>Distribucion</h3>
+                <button class="text-button" id="export-csv">CSV</button>
+              </div>
+              <div class="bars" id="category-bars"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-title">
+                <h3>Proximos focos de Agustin</h3>
+              </div>
+              <div class="focus-list" id="focus-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="finances">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Dinero diario</p>
+              <h2>Ingresos y gastos</h2>
+            </div>
+          </div>
+
+          <form class="form-grid panel" id="finance-form">
+            <label>Tipo
+              <select name="type" required>
+                <option value="ingreso">Ingreso</option>
+                <option value="gasto">Gasto</option>
+              </select>
+            </label>
+            <label>Monto
+              <input name="amount" type="number" min="0" step="0.01" placeholder="0" required>
+            </label>
+            <label>Categoria
+              <input name="category" list="finance-categories" placeholder="Comida, sueldo..." required>
+            </label>
+            <label>Fecha
+              <input name="date" type="date" required>
+            </label>
+            <label class="wide">Detalle
+              <input name="note" placeholder="Descripcion corta">
+            </label>
+            <button class="primary-button" type="submit">Agregar</button>
+          </form>
+          <datalist id="finance-categories">
+            <option value="Sueldo"></option>
+            <option value="Extra"></option>
+            <option value="Comida"></option>
+            <option value="Transporte"></option>
+            <option value="Servicios"></option>
+            <option value="Herramientas"></option>
+            <option value="Estudio"></option>
+          </datalist>
+          <div class="table-wrap panel">
+            <table>
+              <thead><tr><th>Fecha</th><th>Tipo</th><th>Categoria</th><th>Detalle</th><th>Monto</th><th></th></tr></thead>
+              <tbody id="finance-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="view" id="dglab">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Emprendimiento</p>
+              <h2>Proyecto Personal DGLAB</h2>
+            </div>
+          </div>
+
+          <form class="form-grid panel" id="dglab-form">
+            <label>Fecha
+              <input name="date" type="date" required>
+            </label>
+            <label>Foco
+              <input name="focus" placeholder="Cliente, producto, contenido..." required>
+            </label>
+            <label>Estado
+              <select name="status" required>
+                <option value="idea">Idea</option>
+                <option value="en curso">En curso</option>
+                <option value="bloqueado">Bloqueado</option>
+                <option value="hecho">Hecho</option>
+              </select>
+            </label>
+            <label class="wide">Avance
+              <textarea name="progress" rows="4" placeholder="Que avance hoy en DGLAB" required></textarea>
+            </label>
+            <label class="wide">Proximo paso
+              <input name="next" placeholder="La accion concreta que sigue">
+            </label>
+            <button class="primary-button" type="submit">Guardar avance</button>
+          </form>
+
+          <div class="cards" id="dglab-cards"></div>
+        </section>
+
+        <section class="view" id="gym">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Cuerpo y energia</p>
+              <h2>Gimnasio</h2>
+            </div>
+          </div>
+
+          <form class="form-grid panel" id="gym-form">
+            <label>Fecha
+              <input name="date" type="date" required>
+            </label>
+            <label>Fui
+              <select name="went" required>
+                <option value="si">Si</option>
+                <option value="no">No</option>
+              </select>
+            </label>
+            <button class="primary-button" type="submit">Registrar dia</button>
+          </form>
+
+          <div class="cards" id="gym-cards"></div>
+        </section>
+
+        <section class="view" id="investments">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Capital</p>
+              <h2>Ahorros e inversiones</h2>
+            </div>
+          </div>
+
+          <form class="form-grid panel" id="investment-form">
+            <label>Tipo
+              <select name="type" required>
+                <option value="ahorro">Ahorro</option>
+                <option value="inversion">Inversion</option>
+              </select>
+            </label>
+            <label>Nombre
+              <input name="name" placeholder="Fondo, dolar, objetivo..." required>
+            </label>
+            <label>Monto actual
+              <input name="amount" type="number" min="0" step="0.01" required>
+            </label>
+            <label>Objetivo
+              <input name="target" type="number" min="0" step="0.01" placeholder="Opcional">
+            </label>
+            <label>Fecha
+              <input name="date" type="date" required>
+            </label>
+            <label class="wide">Notas
+              <input name="note" placeholder="Plazo, broker, motivo, riesgo">
+            </label>
+            <button class="primary-button" type="submit">Guardar</button>
+          </form>
+
+          <div class="cards" id="investment-cards"></div>
+        </section>
+
+        <section class="view" id="work">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Horas y cierre</p>
+              <h2>Trabajo</h2>
+            </div>
+          </div>
+
+          <form class="form-grid panel" id="work-form">
+            <label>Fecha
+              <input name="date" type="date" required>
+            </label>
+            <label>Hora inicio
+              <input name="start" type="time" required>
+            </label>
+            <label>Hora fin
+              <input name="end" type="time" required>
+            </label>
+            <label>Horas extra
+              <input name="extraHours" type="number" min="0" step="0.25" value="0">
+            </label>
+            <label class="wide">Que hice en horas extra
+              <input name="extraDetails" placeholder="Detalle especifico de las horas extra">
+            </label>
+            <label class="wide">Que hice / que avance
+              <textarea name="progress" rows="4" placeholder="Tareas terminadas, problemas, siguiente paso..." required></textarea>
+            </label>
+            <label class="wide">Recordatorio para manana
+              <input name="next" placeholder="Primer accion del proximo dia">
+            </label>
+            <button class="primary-button" type="submit">Cerrar jornada</button>
+          </form>
+
+          <div class="table-wrap panel">
+            <table>
+              <thead><tr><th>Fecha</th><th>Normal</th><th>Extra</th><th>Detalle extra</th><th>Avance</th><th>Manana</th><th></th></tr></thead>
+              <tbody id="work-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="view" id="study">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Organizacion</p>
+              <h2>Estudio</h2>
+            </div>
+          </div>
+
+          <form class="form-grid panel" id="study-form">
+            <label>Materia / tema
+              <input name="topic" placeholder="Robotica, ingles, curso..." required>
+            </label>
+            <label>Fecha
+              <input name="date" type="date" required>
+            </label>
+            <label>Minutos
+              <input name="minutes" type="number" min="5" step="5" required>
+            </label>
+            <label>Estado
+              <select name="status" required>
+                <option value="pendiente">Pendiente</option>
+                <option value="en curso">En curso</option>
+                <option value="hecho">Hecho</option>
+              </select>
+            </label>
+            <label class="wide">Objetivo
+              <input name="goal" placeholder="Que quiero entender o practicar">
+            </label>
+            <button class="primary-button" type="submit">Agregar bloque</button>
+          </form>
+
+          <div class="cards" id="study-cards"></div>
+        </section>
+
+        <section class="view" id="records">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Busqueda general</p>
+              <h2>Historial</h2>
+            </div>
+            <input id="search" type="search" placeholder="Buscar en todo">
+          </div>
+          <div class="records panel" id="records-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <template id="empty-template">
+      <div class="empty">Todavia no hay datos para mostrar.</div>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
